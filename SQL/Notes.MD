@@ -170,3 +170,5 @@ Test the install by running which postgres, it will output a path such as below.
 $ which postgres
 /usr/local/bin/postgres
 ```
+
+To start a postgres server
