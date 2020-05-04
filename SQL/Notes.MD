@@ -210,3 +210,40 @@ Password 	(left blank)
 * PostgreSQL is often called Postgres.
 
 ## Postgres Command Line Applications
+
+To start a postgres server
+```
+sudo service postgresql start
+```
+to stop
+```
+sudo service postgresql stop
+```
+Log in as a user *default user is* `postgres`
+```
+sudo -u <username> -i 
+```
+Create new database
+```
+createdb <database-name>
+```
+Destroy a database
+```
+dropdb <database-name>
+```
+Reset a database
+```
+dropdb <database-name> && createdb <database-name>
+```
+
+## Intro to psql
+### Takeaways
+* **psql is an interavtive terminal application for connecting and interacting with your local postgres server.
+* connect using `psql <dbname>`
+* psql lets you
+    * Directly input SQL commands.
+    * Inspect and preview your database tables using psql meta-commands
+**tip: type `\?` to see a list of availible commands
+
+### Useful psql commands 
+`psql <dbname> [<username>]` - starts psql connection to dbname.
