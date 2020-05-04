@@ -172,3 +172,41 @@ $ which postgres
 ```
 
 To start a postgres server
+```
+sudo service postgresql start
+```
+to stop
+```
+sudo service postgresql stop
+```
+
+### Initial installation settings
+The initial install will
+* create a database named `postgres`
+* create a user named `postgres`. Your `postgres` user will have no password by default.
+* create initial databases called `template1` and `template0`. Any other database created after `template1` is a clone of `template1`, including its tables and rows. If you add rows (objects) to `template1`, they will be copied into future created databases. `template0` should stay pure and never changed.
+* The default host machine that runs your postgres server, on your machine is `localhost` (aka, `127.0.0.1`)
+* The default port traditionally used to host your server is `5432` there are very few reasons to use a different port.
+
+Default connection settings are:
+```
+Field 	Default Value
+Host 	localhost
+Port 	5432
+Username 	postgres
+Password 	(left blank)
+```
+
+### Deepdive into what Postgres is
+* Postgres is an open source, general purpos and **object-relational database management system**. It's a relational database system with object-oriented features, that work across operating systems.
+    * Object-relational support includes support for arrays and inheritance.
+* Built in 1977, it is **Highly Stable** requires minimal maintenance.
+* **Widely used**: App, Cisco, Etsy, Micrsoft, Reddit, Instagram and many others.
+* Comprehensive support for the **SQL** standard.
+* **Transaction-based**: operations on the database are done through atomic transactions.
+* has **multi-version concurrency control** avoiding unnecessary locking when multiple writes are happening at once.
+    * Postgres lets you have several databases availivle for reading from and writing to.
+* Offers **great performance** and many **indexing** capabilities for optimizing query performance.
+* PostgreSQL is often called Postgres.
+
+## Postgres Command Line Applications
