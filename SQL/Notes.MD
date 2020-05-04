@@ -212,29 +212,29 @@ Password 	(left blank)
 ## Postgres Command Line Applications
 
 To start a postgres server
-```
-sudo service postgresql start
-```
+
+`sudo service postgresql start`
+
 to stop
-```
-sudo service postgresql stop
-```
+
+`sudo service postgresql stop`
+
 Log in as a user *default user is* `postgres`
-```
-sudo -u <username> -i 
-```
+
+`sudo -u <username> -i`
+
 Create new database
-```
-createdb <database-name>
-```
+
+`createdb <database-name>`
+
 Destroy a database
-```
-dropdb <database-name>
-```
+
+`dropdb <database-name>`
+
 Reset a database
-```
-dropdb <database-name> && createdb <database-name>
-```
+
+`dropdb <database-name> && createdb <database-name>`
+
 
 ## Intro to psql
 ### Takeaways
@@ -243,7 +243,126 @@ dropdb <database-name> && createdb <database-name>
 * psql lets you
     * Directly input SQL commands.
     * Inspect and preview your database tables using psql meta-commands
-**tip: type `\?` to see a list of availible commands
+
+### Base psql commands
+`create table <tablename>( id INTEGER PRIMARY KEY, description VARCHAR NOT NULL` - Creates a table, you can then add column names with constraints within parentheses, followed by a semicolon. In this example it creates a primary key with uniqueness and integer constraints and a description with VARCHAR and NOT NULL constraints. 
 
 ### Useful psql commands 
-`psql <dbname> [<username>]` - starts psql connection to dbname.
+`psql <dbname> [<username>]` - starts psql connection to dbname. Optionally use another user other than the current user.
+
+in psql:
+`# \l` - Lists all database on the server, their owners and User Access levels.
+
+`# \c <dbname>` - Connect to the named database.
+
+`# \dt` - Show database tables
+
+`# \d <tablename>` - Describe the table schema 
+
+`# \q` Quit psql and return to terminal.
+
+`# \?` Display availible commands.
+
+
+## Using psql - SQL Commands
+**Manipulating Data**   **Querying Data**   **Structuring Data**    **Joins Groupings**
+INSERT                  SELECT              CREATE TABLE            (INNER) JOIN
+UPDATE                                      ALTER TABLE             LEFT JOIN
+DELETE                                      DROP TABLE              RIGHT JOIN
+                                                                    
+                                            ADD COLUMN              GROUP BY
+                                            DROP COLUMN             SUM
+                                                                    COUNT
+
+**example command**
+insert a row in to table1 `INSERT INTO table1 (id, description) VALUES (1, 'this is a thing');
+then SELECT to query the table `SELECT * from table1;` and it will output all rows from table 1 in this case the values we just entered in row 1.
+
+## Other Postgres clients
+### CLI Tools
+> psql, createdb, dropdb etc.
+### Postgres GUIs
+* **pgAdmin** - A popular gui Postgres client works on all OS'. 
+* **PopSQL** - Another gui, availible on Mac only.
+### Postgres Adapters
+> **Database Adapters:** psycopg2 (to make client python apps)
+
+### Useful Information
+```
+**Connection Setting:**	*Default*
+Host	                *localhost (aka, 127.0.0.1)*
+Port	                *5432*
+Username	            *postgres*
+Password	            *(None)*
+```
+
+## DBAPIs and psycogp2
+Sometimes we will want to interact with our DB in a programming language. E.g. to build web applications or data pipelines in a specific language (Ruby, Python, JS, Julia etc.) That's where DBAPIs come in.
+* A DBAPI
+    * provides a standard interface for one language (like Python) to talk to a relational DB server.
+    * Is a low level library for writing SQL statements that connect to a database
+    * is also known as a DB adapter.
+* Different DBAPIs exist for every server framework or language + database system
+* Database adapters define a standard for using a databes (with SQL) and using the results of DB queries as input data in the given language
+    * Turn a selected `SELECT * from some_table;` list of rows into an array of objects in Javascript for say a NodeJS adapter; or a list of tuples in python for a Python adapter.
+
+### Examples across languages and frameworks
+* Ruby: pg
+* NodeJS: node-postgres
+* Python: psycogp2
+
+
+### Install psycopg2
+Make sure you have at least Python3.4
+`python --version`
+Install latest pip version
+`pip3 install -U pip`
+Set the path for postgres - You can find this by running `sudo find /usr -wholename '*/bin/postgres*` then `locate bin/postgregs`
+`export PATH=/usr/lib/postgresql/10.2/bin/:$PATH` 
+Then run
+`pip install psycopg2` - If you run into errors checkout [this](https://stackoverflow.com/questions/28253681/you-need-to-install-postgresql-server-dev-x-y-for-building-a-server-side-extensi/28938258#28938258) 
+
+
+## psycopg2: basic usage
+
+### How to use psycogp2
+1. Open Terminal, cd to location and mkdir to store demo scripts CD into that directory.
+2. touch demo.py && open in IDE.
+3. start the *.py file with import psycogp2 then write your scripts.
+
+### Example Code
+```
+import psycogp2
+
+psycogp2.connect('dbname=example')
+
+cursor = conn.cursor()
+
+# Open a cursor to perfor DB operations
+cur = conn.cursor()
+
+# drop any existing todos table
+cur.execute("DROP TABLE IF EXISTS todos;")
+
+# create todos tables
+# triple quotes allow multiline text in python
+cur.execute("""
+    CREATE TABLE todos (
+        id serial PRIMARY KEY,
+        description VARCHAR NOT NULL
+    );
+""")
+
+# commit, so it does the executions on the db and persists in the db
+con.commit()
+
+cur.close()
+conn.close()
+```
+> If you run into a `ROLE does not exits` error. Open psql and  use the following
+```
+sudo -u postgres psql
+postgres=# create database <db>;
+postgres=# create user myuser with encrypted password 'mypass';
+postgres=# grant all privileges on database <db> to myuser;
+```
