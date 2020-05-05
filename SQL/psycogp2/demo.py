@@ -33,7 +33,7 @@ rows = 'SELECT * from todos where id < 10'
 numberOfRows = cursor.execute(rows)
 
 while True:
-    row = cursor.fetchone()
+    row = cursor.fetchone() # this fetches one and loops, can also run fetchmany or fetchall
     if row == None:
         break
     print(row)

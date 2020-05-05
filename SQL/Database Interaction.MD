@@ -1,6 +1,6 @@
 # Relational Databases
 
-## Database Charecteristics
+## Database Characteristics
 
 - Store many types of data
 - Multiple users at once = concurrency control
@@ -14,15 +14,15 @@
 
 There are three types of keys:
 
-- Primary Keys = a uniquie identifier, something like user_id.
+- Primary Keys = a unique identifier, something like user_id.
 - Composite Keys = primary key consisting of columnS i.e user_id and reg_no.
 - Foreign Keys = Create a relationship between two tables.
 
-SQLFiddle is down so I can't play with the drivers and vehichles database.
+SQLFiddle is down so I can't play with the drivers and vehicles database.
 
 ## DBMS Database Management Systems
 
-Different DBMS systems have their own DIALECTS of SQL. The DBMS that we will be using for this course is PostgresSQL
+Different DBMS systems have their own DIALECTS of SQL. The DBMS that we will be using for this course is PostgresQL
 
 ## Execution Plan
 
@@ -51,7 +51,7 @@ The Execution Plan looks as follows.
 SELECT make, model from vehicles
 JOIN drivers on vehicles.driver_id = drivers.id;
 
-// Hash Join: This joins two record sets, the hash join creates a hash in-memory that hashes based the driver_id column.
+// Hash Join: This joins two record sets, the hash join creates a hash in-memory that hashes based on the driver_id column.
 
 // Seq Scan: Sequential scan is done across the entire vehicles table. This makes sense since we are looking to fetch all 'make' and 'model' across 'all records' in the vehicles table.
 
@@ -84,13 +84,13 @@ a **client** is a program that can request data from a _server_
 
 **Requests & Responses**
 
-> Restaraunt: a client sends a request to the server and the _waiters_ collect the data from the kitchen. The server returns with a **response** to the client. The client and server use a common language (**communication protocol**)
+> Restaurant: a client sends a request to the server and the _waiters_ collect the data from the kitchen. The server returns with a **response** to the client. The client and server use a common language (**communication protocol**)
 
 ![C3PO](https://cdn0.iconfinder.com/data/icons/famous-character-vol-1-colored/48/JD-34-512.png)
 
 **Relational Database Clients**
 
-- A databse client is any program that sends requests to a database.
+- A database client is any program that sends requests to a database.
 - In some cases, the database client is a web server! When your browser makes a request the server acts as a server(_fulfilling the request_) but when the server requests data from the database, it is acting as a client to that database.
 - To a **database server** a **webserver** is a **client**
 - to a web client a web server is a server
@@ -105,17 +105,17 @@ When a user clicks on a product it serves more info on a product detail page, wi
 What happens when a user clicks on a product
 
 ```
-* User clicks on item.
+* User clicks on an item.
 * Web Client registers a click event that occured in the users browser.
 * an event handler (click event) sees what was clicked and passes a function
 * Request is asking for info (data req.) and to render a diff. page (view req.)
 * Server process listens to the request sent, fetches data and renders new page.
 
-    Data Fetch
-    * server receives request, and uses input data to shape query.
-    * database processes request, sends response to web server
-    * server receives DB response abd determines view + powers view template with fetched data sends to client.
-    * client is responsible for rendering something to the user, that represents the data and presentation.
+   Data Fetch
+   * server receives a request, and uses input data to shape query.
+   * database processes request, sends response to web server
+   * server receives DB response and determines view + powers view template with fetched data sends to client.
+   * the client is responsible for rendering something to the user, that represents the data and presentation.
 ```
 
 > The \***\*web server\*\*** receives a request from the **client** and sends a request to the **database**, which sends back a response to the **web server**, **which then sends back a response** to the **client**.
@@ -143,7 +143,7 @@ An IP tells you where to find a computer it doesn't tell you specifically where 
 
 - TCP/IP is **connection-based**, meaning all communications between parties are arranged over a connection. A connection is established before any data transmission begins.
 - Over TCP/IP we always need to establish a connection between clients and servers to enable communications.
-  - Deliveries over a connection are **error-checked:** if packets arrive damage or lost they are resent(known as _retransmission_)
+- Deliveries over a connection are **error-checked:** if packets arrive damage or lost they are resent(known as _retransmission_)
 - Connection starts a **session.** Ending the connection ends the **session**.
 - In a DB session, many **transactions** can occur during a session. Each transaction does work to commit changes to the database.
 
@@ -161,7 +161,7 @@ All Changes to data are made through transactions. These include **UPDATES**, **
 - Databases are interacted with using client-server interactions over a network.
 - Postgres uses TCP/IP to be interacted with, which is connection-based.
 - We interact with databases like Postgres during sessions.
-- Sessions have transsactions that commit work to the database.
+- Sessions have transactions that commit work to the database.
 
 **Transactions capture logical bundles of work.**
 Work is bundled into transactions so that in case of system failures, data in your database is still kept in a valid state (by rolling back the entire transaction if any part of it fails). To ensure a database is consistent before and after work is done to it, they use atomic transactions and actions like commits and rollbacks to handle failures appropriately. Transactions are ACID
@@ -185,7 +185,7 @@ sudo apt-get update
 sudo apt-get install postgresql-10.4
 ```
 
-The set the password and createa testdb
+The set the password and create testdb
 
 ```
 sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
@@ -210,30 +210,30 @@ The initial install will
 
 - create a database named `postgres`
 - create a user named `postgres`. Your `postgres` user will have no password by default.
-- create initial databases called `template1` and `template0`. Any other database created after `template1` is a clone of `template1`, including its tables and rows. If you add rows (objects) to `template1`, they will be copied into future created databases. `template0` should stay pure and never changed.
+- create initial databases called `template1` and `template0`. Any other database created after `template1` is a clone of `template1`, including its tables and rows. If you add rows (objects) to `template1`, they will be copied into future created databases. `template0` should stay pure and never change.
 - The default host machine that runs your postgres server, on your machine is `localhost` (aka, `127.0.0.1`)
 - The default port traditionally used to host your server is `5432` there are very few reasons to use a different port.
 
 Default connection settings are:
 
 ```
-Field 	Default Value
-Host 	localhost
-Port 	5432
-Username 	postgres
-Password 	(left blank)
+Field   Default Value
+Host  localhost
+Port  5432
+Username  postgres
+Password  (left blank)
 ```
 
 ### Deepdive into what Postgres is
 
-- Postgres is an open source, general purpos and **object-relational database management system**. It's a relational database system with object-oriented features, that work across operating systems.
-  - Object-relational support includes support for arrays and inheritance.
+- Postgres is an open source, general purpose and **object-relational database management system**. It's a relational database system with object-oriented features, that work across operating systems.
+- Object-relational support includes support for arrays and inheritance.
 - Built in 1977, it is **Highly Stable** requires minimal maintenance.
-- **Widely used**: App, Cisco, Etsy, Micrsoft, Reddit, Instagram and many others.
+- **Widely used**: App, Cisco, Etsy, Microsoft, Reddit, Instagram and many others.
 - Comprehensive support for the **SQL** standard.
 - **Transaction-based**: operations on the database are done through atomic transactions.
 - has **multi-version concurrency control** avoiding unnecessary locking when multiple writes are happening at once.
-  - Postgres lets you have several databases availivle for reading from and writing to.
+- Postgres lets you have several databases available for reading from and writing to.
 - Offers **great performance** and many **indexing** capabilities for optimizing query performance.
 - PostgreSQL is often called Postgres.
 
@@ -267,11 +267,11 @@ Reset a database
 
 ### Takeaways
 
-- \*\*psql is an interavtive terminal application for connecting and interacting with your local postgres server.
+- \*\*psql is an interactive terminal application for connecting and interacting with your local postgres server.
 - connect using `psql <dbname>`
 - psql lets you
-  - Directly input SQL commands.
-  - Inspect and preview your database tables using psql meta-commands
+- Directly input SQL commands.
+- Inspect and preview your database tables using psql meta-commands
 
 ### Base psql commands
 
@@ -282,7 +282,7 @@ Reset a database
 `psql <dbname> [<username>]` - starts psql connection to dbname. Optionally use another user other than the current user.
 
 in psql:
-`# \l` - Lists all database on the server, their owners and User Access levels.
+`# \l` - Lists all databases on the server, their owners and User Access levels.
 
 `# \c <dbname>` - Connect to the named database.
 
@@ -290,15 +290,22 @@ in psql:
 
 `# \d <tablename>` - Describe the table schema
 
-`# \q` Quit psql and return to terminal.
+`# \q` Quit psql and return to the terminal.
 
-`# \?` Display availible commands.
+`# \?` Display available commands.
 
 ## Using psql - SQL Commands
-[Screengrab of SQL Commands](https://i.imgur.com/8tmYR0z.png)
+
+![Screengrab of SQL Commands](https://i.imgur.com/8tmYR0z.png)
 
 **example command**
-insert a row in to table1 `INSERT INTO table1 (id, description) VALUES (1, 'this is a thing'); then SELECT to query the table`SELECT \* from table1;` and it will output all rows from table 1 in this case the values we just entered in row 1.
+insert a row in to table1
+
+```
+INSERT INTO table1 (id, description) VALUES (1, 'this is a thing'); then SELECT to query the table`SELECT \* from table1;
+```
+
+and it will output all rows from table 1 in this case the values we just entered in row 1.
 
 ## Other Postgres clients
 
@@ -309,7 +316,7 @@ insert a row in to table1 `INSERT INTO table1 (id, description) VALUES (1, 'this
 ### Postgres GUIs
 
 - **pgAdmin** - A popular gui Postgres client works on all OS'.
-- **PopSQL** - Another gui, availible on Mac only.
+- **PopSQL** - Another gui, available on Mac only.
   & **Tableplus** - A different multi operating system gui
 
 ### Postgres Adapters
@@ -319,30 +326,30 @@ insert a row in to table1 `INSERT INTO table1 (id, description) VALUES (1, 'this
 ### Useful Information
 
 ```
-**Connection Setting:**	*Default*
-Host	                *localhost (aka, 127.0.0.1)*
-Port	                *5432*
-Username	            *postgres*
-Password	            *(None)*
+**Connection Setting:** *Default*
+Host                  *localhost (aka, 127.0.0.1)*
+Port                  *5432*
+Username              *postgres*
+Password              *(None)*
 ```
 
-## DBAPIs and psycogp2
+## DBAPIs and psycopg2
 
 Sometimes we will want to interact with our DB in a programming language. E.g. to build web applications or data pipelines in a specific language (Ruby, Python, JS, Julia etc.) That's where DBAPIs come in.
 
 - A DBAPI
-  - provides a standard interface for one language (like Python) to talk to a relational DB server.
-  - Is a low level library for writing SQL statements that connect to a database
-  - is also known as a DB adapter.
+- provides a standard interface for one language (like Python) to talk to a relational DB server.
+- Is a low level library for writing SQL statements that connect to a database
+- is also known as a DB adapter.
 - Different DBAPIs exist for every server framework or language + database system
-- Database adapters define a standard for using a databes (with SQL) and using the results of DB queries as input data in the given language
-  - Turn a selected `SELECT * from some_table;` list of rows into an array of objects in Javascript for say a NodeJS adapter; or a list of tuples in python for a Python adapter.
+- Database adapters define a standard for using a database (with SQL) and using the results of DB queries as input data in the given language
+- Turn a selected `SELECT * from some_table;` list of rows into an array of objects in Javascript for say a NodeJS adapter; or a list of tuples in python for a Python adapter.
 
 ### Examples across languages and frameworks
 
 - Ruby: pg
 - NodeJS: node-postgres
-- Python: psycogp2
+- Python: psycopg2
 
 ### Install psycopg2
 
@@ -357,13 +364,30 @@ Then run
 
 ## psycopg2: basic usage
 
-### How to use psycogp2
+### How to use psycopg2
 
 1. Open Terminal, cd to location and mkdir to store demo scripts CD into that directory.
 2. touch demo.py && open in IDE.
-3. start the \*.py file with import psycogp2 then write your scripts.
+3. start the \*.py file with import psycopg2 then write your scripts.
+
+### Commands
+
+`conn = psycopg2.connect(database=db1 user=usr1 password=pwd1)` Establishes connection, starts session, begins transaction. \*Data in the parentheses may vary
+`cursor = conn.cursor()` Sets a cursor to begin executing commands
+
+`cursor.execute(<sql command string>)` passes SQL commands
+`cursor.commit()` commit the transaction
+`cursor.rollback()` rollback transaction
+
+`cursor.fetchall()` Fetches all of specified
+`cursor.fetchmany(#)` replace # with number it will fetch that many
+`cursor.fetchone()` fetches the first result add [#] with the # replaced to fetch a specific entry.
+
+`cursor.close()` closes the cursor
+`conn.close()` closes connection
 
 ### Table Script
+
 The following script will connect to the 'example' database, create a table named todos with 3 columns (id, description and completed) which you are able to check whether you have completed the task or not.
 
 > Note: Make sure to sign in as postgres in terminal before running the .py script
@@ -373,17 +397,17 @@ import psycopg2
 
 connection = psycopg2.connect('dbname=example user=postgres password=postgres')
 
-# Open a cursor to perfor DB operations
+# Open a cursor to perform DB operations
 cursor = connection.cursor()
 
 # create table
 # triple quotes allow multiline text in python
 cursor.execute('''
-    CREATE TABLE todos (
-        id INTEGER PRIMARY KEY,
-        task VARCHAR NOT NULL,
-        completed BOOLEAN NOT NULL DEFAULT False
-    );
+   CREATE TABLE todos (
+       id INTEGER PRIMARY KEY,
+       task VARCHAR NOT NULL,
+       completed BOOLEAN NOT NULL DEFAULT False
+   );
 ''')
 
 cursor.execute('INSERT INTO todos (id, completed) VALUES (1, true);')
@@ -395,7 +419,7 @@ cursor.close()
 connection.close()
 ```
 
-> If you run into a `ROLE does not exits` error. Open psql and use the following
+> If you run into a `ROLE does not exist` error. Open psql and use the following
 
 ```
 sudo -u postgres psql
@@ -405,6 +429,7 @@ postgres=# grant all privileges on database <db> to myuser;
 ```
 
 > The demo.py script in the work folder contains a script which does the following.
+
 ```
 import psycopg2
 
@@ -420,7 +445,9 @@ create a table named todos with two columns (id=Pkey & completed=Boolean not nul
 
 inserts 5 rows with data into the table
 
-then fetches rhe rows and prints them to the terminal.
+then fetches the rows and prints them to the terminal.
 
 The script then commits the connection, closes the cursor and connection.
 ```
+
+With the knowledge we learnt on psql and psycopg2 we could set up a web server and have a backend application running in no time.
