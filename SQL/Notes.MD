@@ -424,4 +424,3 @@ then fetches rhe rows and prints them to the terminal.
 
 The script then commits the connection, closes the cursor and connection.
 ```
-

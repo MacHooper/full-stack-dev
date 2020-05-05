@@ -23,7 +23,10 @@ cursor.execute("insert into %s values (%%s, %%s)" % table_name, [1, True])
 cursor.execute("insert into %s values (%%s, %%s)" % table_name, [2, False])
 cursor.execute("insert into %s values (%%s, %%s)" % table_name, [3, True])
 cursor.execute("insert into %s values (%%s, %%s)" % table_name, [4, True])
-cursor.execute("insert into %s values (%%s, %%s)" % table_name, [5, False])
+cursor.execute('insert into todos (id, completed)' + 'VALUES (%(id)s, %(completed)s);', {
+    'id' : 5,
+    'completed' : False
+})
 
 # fetching rows and printing to terminal
 rows = 'SELECT * from todos where id < 10'
