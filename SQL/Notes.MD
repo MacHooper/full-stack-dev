@@ -31,7 +31,7 @@ A DBMS takes the SQL query and generates an execution plan.
 EXAMPLE
 
 ```
-SELECT ** from vehicles WHERE driver_id = 3
+SELECT * from vehicles WHERE driver_id = 3
 
 Builds an execution plan:
 
@@ -295,15 +295,7 @@ in psql:
 `# \?` Display availible commands.
 
 ## Using psql - SQL Commands
-
-**Manipulating Data** **Querying Data** **Structuring Data** **Joins Groupings**
-INSERT SELECT CREATE TABLE (INNER) JOIN
-UPDATE ALTER TABLE LEFT JOIN
-DELETE DROP TABLE RIGHT JOIN
-  
- ADD COLUMN GROUP BY
-DROP COLUMN SUM
-COUNT
+[Screengrab of SQL Commands](https://i.imgur.com/8tmYR0z.png)
 
 **example command**
 insert a row in to table1 `INSERT INTO table1 (id, description) VALUES (1, 'this is a thing'); then SELECT to query the table`SELECT \* from table1;` and it will output all rows from table 1 in this case the values we just entered in row 1.
@@ -371,35 +363,36 @@ Then run
 2. touch demo.py && open in IDE.
 3. start the \*.py file with import psycogp2 then write your scripts.
 
-### Example Code
+### Table Script
+The following script will connect to the 'example' database, create a table named todos with 3 columns (id, description and completed) which you are able to check whether you have completed the task or not.
+
+> Note: Make sure to sign in as postgres in terminal before running the .py script
 
 ```
-import psycogp2
+import psycopg2
 
-psycogp2.connect('dbname=example')
-
-cursor = conn.cursor()
+connection = psycopg2.connect('dbname=example user=postgres password=postgres')
 
 # Open a cursor to perfor DB operations
-cur = conn.cursor()
+cursor = connection.cursor()
 
-# drop any existing todos table
-cur.execute("DROP TABLE IF EXISTS todos;")
-
-# create todos tables
+# create table
 # triple quotes allow multiline text in python
-cur.execute("""
+cursor.execute('''
     CREATE TABLE todos (
-        id serial PRIMARY KEY,
-        description VARCHAR NOT NULL
+        id INTEGER PRIMARY KEY,
+        task VARCHAR NOT NULL,
+        completed BOOLEAN NOT NULL DEFAULT False
     );
-""")
+''')
+
+cursor.execute('INSERT INTO todos (id, completed) VALUES (1, true);')
 
 # commit, so it does the executions on the db and persists in the db
-con.commit()
+connection.commit()
 
-cur.close()
-conn.close()
+cursor.close()
+connection.close()
 ```
 
 > If you run into a `ROLE does not exits` error. Open psql and use the following
@@ -410,3 +403,25 @@ postgres=# create database <db>;
 postgres=# create user myuser with encrypted password 'mypass';
 postgres=# grant all privileges on database <db> to myuser;
 ```
+
+> The demo.py script in the work folder contains a script which does the following.
+```
+import psycopg2
+
+connect to the database as user postgres
+
+sets a table_name variable with the value todos
+
+opens a cursor for the database
+
+deletes any existing table with the name todos
+
+create a table named todos with two columns (id=Pkey & completed=Boolean not null default False)
+
+inserts 5 rows with data into the table
+
+then fetches rhe rows and prints them to the terminal.
+
+The script then commits the connection, closes the cursor and connection.
+```
+
