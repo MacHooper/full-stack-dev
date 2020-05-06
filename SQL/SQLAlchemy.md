@@ -409,9 +409,24 @@ This is useful for if you want to do a joint query
 
 It is when we run `db.session.commit` that all changes are commited.
 
+A Flush takes pending changes and translates them into SQL commands, ready to be commited to the database. 
+On INSERTS a flush allows future primary key values to exits.
+NOT the same as a commit - Nothing is persisted to the database yet when a flush happens.
+
 ### Stages: 
 1. **Transient:** an object exists, it was defined.
                   `user1=User(name='Mac')
 2. **Pending:** an object was attached to a session. "Undo becomes available via `db.session.rollback(). Waits for a flush to happen
 3. **Flushed:** about ready to be commited to the database, translating actions into SQL command statements for the engine.
 4. **Commited:** manually called for a change to persist to the database; session's transaction is cleared for a new set of changes.
+
+## 4. SQAlchemy Object Lifecycle - Part 2
+* A **flush** takes pending changes, and translates them into commands ready to be commited. It occurs:
+  * when you call `Query`. Or
+  * on `db.session.commit()
+
+A commit creates persistent changes on the database AND lets the db.session start with a new transaction.
+
+When a statement has been flushed already, SQLAlchemy knows not to do the work of translating actions to SQL statements.
+
+> Flush occurs whenever a `query` or `commit()` is called.
