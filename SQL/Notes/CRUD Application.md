@@ -9,7 +9,7 @@
 
 ### Building out a CRUD application.
 
-So far I have covered the conceptual foundation needed to understand how to do real-world web development across the stack. In the next lessons I will be building a fully function application.
+So far I have covered the conceptual foundation needed to understand how to do real-world b development across the stack. In the next lessons I will be building a fully function application.
 
 #### Creating a CRUD To-Do App
 
@@ -17,7 +17,7 @@ So far I have covered the conceptual foundation needed to understand how to do r
 **Read** SELECT - A user can read things already stored on the database.
 **Update** UPDATE - A user can update the items within a databse.
 **Delete** DELETE - A user can delete things from the databse.
-We will be using ORM which means whenever a user wants to create something it is added to the Python3 session which will create the SQL Expressions for me.
+ will be using ORM which means whenever a user wants to create something it is added to the Python3 session which will create the SQL Expressions for me.
 
 ORM Commands
 **Create/INSERT** `db.session.add(user1)`
@@ -49,13 +49,13 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def index() -
     return render_template('index.html', data=[{
-        'description': 'Todo 1'
+        'description' - 'Todo 1'
     },{
-        'description': 'Todo 2'
+        'description' - 'Todo 2'
     },{
-        'description': 'Todo 3'
+        'description' - 'Todo 3'
     },])
 ```
 
@@ -79,7 +79,7 @@ index.html
 </html>
 ```
 
-## 3. Reading ToDo Items: The "R" In CRUD
+## 3. Reading ToDo Items - The "R" In CRUD
 
 In this section read operations are used, querying the database t oreturn backed views, replacing our dummy data with "real" data coming from a database.
 
@@ -91,51 +91,51 @@ from flask            import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:postgres@localhost:5432/todoapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres -//postgres -postgres@localhost -5432/todoapp'
 db = SQLAlchemy(app)
 
-class Todo(db.Model):
+class Todo(db.Model) -
     __tablename__ = 'todos'
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(), nullable=False)
 
-    def __repr__(self):
+    def __repr__(self) -
         return f'<Todo {self.id} {self.description}>'
 
 db.create_all()
 
 @app.route('/')
-def index():
+def index() -
     return render_template('index.html', data=Todo.query.all())
 ```
 
 ## 4. Model View Controller (MVC)
 
-- **MVC** stands for Model-View-Controller, a common pattern for architecting web applications
-- Describes the 3 layers of the application we are developing.
+- **MVC** stands for Model-View-Controller, a common pattern for architecting b applications
+- Describes the 3 layers of the application  are developing.
 
 ### Layers
 
-    * **Models:** manage *data* and *business logic*. What happens inside models and database, capturing logical relationships and properties across the web app objects
-    * **Views:** handles *display and representation logic*. What the user sees (HGTML, CSS, JS from the users' perespective)
-    * **Controllers:** routes commands to the models and views, containing *control logic* Control how commands are sent to models and views, and how models and views wound up interacting with each other.
+    * **Models -** manage *data* and *business logic*. What happens inside models and database, capturing logical relationships and properties across the b app objects
+    * **Views -** handles *display and representation logic*. What the user sees (HGTML, CSS, JS from the users' perespective)
+    * **Controllers -** routes commands to the models and views, containing *control logic* Control how commands are sent to models and views, and how models and views wound up interacting with each other.
 
-![Model-View Controller Diagram](https://video.udacity-data.com/topher/2019/August/5d5dc48f_screen-shot-2019-08-21-at-3.23.56-pm/screen-shot-2019-08-21-at-3.23.56-pm.png)
+![Model-View Controller Diagram](https -//video.udacity-data.com/topher/2019/August/5d5dc48f_screen-shot-2019-08-21-at-3.23.56-pm/screen-shot-2019-08-21-at-3.23.56-pm.png)
 
 ## 5. Handling User Input
 
 Creating, updating and deleting information from a database requires handling user input on what is being created/updated/deleted.
 
-#### MVC Development: How to add Create To-Do item functionality
+#### MVC Development - How to add Create To-Do item functionality
 
-    * On the view:       implement an HTML form
-    * On the controller: retrieve the user's input and manipulate models
-    * On the models:     create a record in our database, and return the newly created to-do item to the controller
-    * On the controller: take the newly created to-do item and decide how to update the view with it.
+    * On the view -       implement an HTML form
+    * On the controller - retrieve the user's input and manipulate models
+    * On the models -     create a record in our database, and return the newly created to-do item to the controller
+    * On the controller - take the newly created to-do item and decide how to update the view with it.
 
 #### Learn
 
-1. **How we accep and get user data** in the context of a Flask app
+1. **How  accep and get user data** in the context of a Flask app
 2. **Send data in controllers** using database sessions in a controller
 3. **Manipulating models** adding records in SQLAlchemy Models
 4. **Direct how the view should update** within the controller and views
@@ -169,15 +169,15 @@ _ Forms \* JSON
 > for the todo app the form method will be used.
 
 Example form
-![Submit Data with HTML Forms](https://i.imgur.com/A0ShmaM.png)
+![Submit Data with HTML Forms](https -//i.imgur.com/A0ShmaM.png)
 
 ### Form methods `POST` vs `GET`
 
-- The way form data traverses from thje client to server differes based on whether we are using a GET or a POST method.
+- The way form data traverses from thje client to server differes based on whether  are using a GET or a POST method.
 
 **The Post Submission**
 
-- On submit, we send off an hTTP POST request to the route `/create` with a **request body**
+- On submit,  send off an hTTP POST request to the route `/create` with a **request body**
 - The requesy body stringifies the key-value pairs of fields from the form ( as part of the `name` attribute) along with their values.
 
 **The GET Submission**
@@ -198,22 +198,22 @@ from flask import Flask, render_template, request, redirect, url_for # added req
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:postgres@localhost:5432/todoapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres -//postgres -postgres@localhost -5432/todoapp'
 db = SQLAlchemy(app)
 
-class Todo(db.Model):
+class Todo(db.Model) -
   __tablename__ = 'todos'
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String(), nullable=False)
 
-  def __repr__(self):
+  def __repr__(self) -
     return f'<Todo {self.id} {self.description}>'
 
 db.create_all()
 
 # altered this code
 @app.route('/todos/create', methods=['POST'])
-def create_todo():
+def create_todo() -
     description = request.form.get('description', '')
     todo = Todo(description=description)
     db.session.add(todo)
@@ -221,7 +221,7 @@ def create_todo():
     return redirect(url_for('index'))
 
 @app.route('/')
-def index():
+def index() -
   return render_template('index.html', data=Todo.query.all())
 ```
 
@@ -248,13 +248,13 @@ index.html
 
 ```
 
-This app has the following. 1. View: HTML Form 2. Controller: Receives the form submission 3. Model interactions: within the controller
+This app has the following. 1. View - HTML Form 2. Controller - Receives the form submission 3. Model interactions - within the controller
 
 ## 8. Using AJAX to send data to flask
 
 Data requests are either synchronous or async(asynchronous)
 Async data request are requests that get sent to the server and back to the client without a page refresh.
-Async request(AJAX Requests) use one of two methods:
+Async request(AJAX Requests) use one of two methods -
 _ XMLHtppRequest
 _ Fetch(Modern Way)
 
@@ -286,12 +286,12 @@ xhttp.onreadystatechange = function() {
 
 ```
 fetch('/my/request', {
-  method: 'POST',
-  body: JSON.stringify({
-    'description': 'some description here'
+  method - 'POST',
+  body - JSON.stringify({
+    'description' - 'some description here'
   }),
-  headers: {
-    'Content-Type': 'application/json'
+  headers - {
+    'Content-Type' - 'application/json'
   }
 });
 ```
@@ -309,7 +309,7 @@ index.html
     <title>Todo App</title>
     <!--Added Style -->
     <style>
-      .hidden{display: none;}
+      .hidden{display - none;}
     </style>
   </head>
   <body>
@@ -317,7 +317,7 @@ index.html
       <input type="text" name="description" />
       <input type="submit" value="Create" />
     </form>
-    <div id="error" class="hidden">Something went wrong</div>
+    <div id="error" class="hidden">Something nt wrong</div>
     <ul>
       {% for d in data %}
       <li>{{ d.description }}</li>
@@ -329,12 +329,12 @@ index.html
     document.getElementById('form').onsubmit = function(e) {
       e.preventDefault();
       fetch('/todos/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          'description': document.getElementById('description').value
+        method - 'POST',
+        body - JSON.stringify({
+          'description' - document.getElementById('description').value
         }),
-        headers: {
-          'Content-Type': 'application/json'
+        headers - {
+          'Content-Type' - 'application/json'
         }
       })
       .then(function(response) {
@@ -357,7 +357,7 @@ index.html
 
 ## 9. Using sessions in controllers
 
-Commits can succeed or fail. On fail, we want to rollback the session to avoid potential implicit commits done by the database.
+Commits can succeed or fail. On fail,  want to rollback the session to avoid potential implicit commits done by the database.
 Good practice is to close connections at the end of every session
 
 #### Pattern (try-except-finally)
@@ -365,15 +365,15 @@ Good practice is to close connections at the end of every session
 ```
  import sys
 
- try:
+ try -
    todo = Todo(description=description)
    db.session.add(todo)
    db.session.commit()
- except:
+ except -
    db.session.rollback()
    error=True
    print(sys.exc_info())
- finally:
+ finally -
    db.session.close()
 ```
 
@@ -385,47 +385,197 @@ from flask_sqlalchemy import SQLAlchemy
 import sys
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:postgres@localhost:5432/todoapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres -//postgres -postgres@localhost -5432/todoapp'
 db = SQLAlchemy(app)
 
-class Todo(db.Model):
+class Todo(db.Model) -
   __tablename__ = 'todos'
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String(), nullable=False)
 
-  def __repr__(self):
+  def __repr__(self) -
     return f'<Todo {self.id} {self.description}>'
 
 # edits here
 @app.route('/todos/create', methods=['POST'])
-def create_todo():
+def create_todo() -
   error = False
   body = {}
-  try:
+  try -
     description = request.get_json()['description']
     todo = Todo(description=description)
     db.session.add(todo)
     db.session.commit()
     body['description'] = todo.description
-  except:
+  except -
     error = True
     db.session.rollback()
     print(sys.exc_info())
-  finally:
+  finally -
     db.session.close()
-  if error:
+  if error -
     abort (400)
-  else:
+  else -
     return jsonify(body)
 
 @app.route('/')
-def index():
+def index() -
   return render_template('index.html', data=Todo.query.all())
 ```
 
 > expire_on_commit - defaults to TRue. When True, all instances will be fully expired after each commit()
-> to avoid this add `db= SQLAlchemy(app, session_options={"expire_on_commit": False})
+> to avoid this add `db= SQLAlchemy(app, session_options={"expire_on_commit" - False})
 
 ## 10. Recap
 
 Next adding how to change data models over time.
+
+# Building a CRUD App with SQLAlchemy - Part 2
+
+## 1. Introduction
+
+- Implementing update functionality: update a todo item's completed state
+- Implementing delete functionality: remove a todo item
+- Model relationships beten objects in SQL and SQLAlchemy
+  - Setting up Foreign Key constraints
+  - Building CRUD on Lists of To-Do items
+- Handling the special case of modeling many-to-many relationships
+
+## 2. Updating a Todo Item Part 1
+
+UPDATE
+In SQL```
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+````
+In SQLAlchemy ORM```
+    user = User.query.get(some_id)
+    user.name = 'Some new name'
+    db.session.commit()
+````
+
+Updating a ToDo Item using if statements in Jinja
+
+1. Add check boxes to `index.html` `<li><input type="checkbox" {% if d.completed %} checked {% endif %}>{{ d.description }}</li>`
+2. Add an event listener and function that runs an update when the boxes are checked. This will cause an console log when checkbox state changes.
+   ```
+   const checkboxes = document.querySelectorAll('.check-completed');
+   for (let i = 0; i < checkboxes.length; i++) {
+     const checkbox = checkboxes[i];
+     checkbox.onchange = function(e){
+       console.log('event', e);
+     }
+   }
+   ```
+
+## 3. Updating a Todo Item Part 2
+
+Next define a handler for the checkbox ticks in app.py
+Also adding the todo id to the url in both the front end and the backend so that will be
+
+```
+   <li>
+      <input class="check-completed" data-id="{{ todo.id }}" type="checkbox" {% if todo.completed %} checked {% endif %} />
+      {{ todo.description }}
+    </li>
+```
+
+```
+@app.route('/todos/<todo_id>/set-completed', methods=['POST'])
+def set_completed_todo(todo_id):
+try:
+  completed = request.get_json()['completed']
+  print('completed', completed)
+  todo = Todo.query.get(todo_id)
+  todo.completed = completed
+  db.session.commit()
+except:
+  db.session.rollback()
+finally:
+  db.session.close()
+return redirect(url_for('index'))
+```
+
+Make sure to add this to the index route so that the todo items are always in order of last created.
+
+```
+  return render_template('index.html', todos=Todo.query.order_by('id').all())
+```
+
+## 4. DELETE A Todo Items
+
+Add a button next to the li that contains an X that users can delete the to do item with
+The following expressions are used
+
+```
+SQL
+
+DELETE FROM table_name
+WHERE condition;
+
+ORM
+
+todo = Todo.query.get(todo_id)
+db.session.delete(todo) # or...
+Todo.query.filter_by(id=todo_id).delete()
+db.session.commit()
+```
+
+## 5. Intro - Modeling Relationships
+
+> The relationships beten these models can determine if certain actions on one model should happen on other models, so that when something happens to one model, related model objects should also be affected (by being created, read, updated, or deleted).
+
+## 6. Review - Relationships & Joins
+
+> An INNER join selects all rows from both tables that have a match beten the columns, specifying JOIN with no prefixes defaults to an INNER join
+
+## 7. db.relationship
+
+- SQLAlchemy configures the settings beten model relationships once, and generates JOIN statements for us whenever  need them.
+- db.relationship is an interface offered in SQLAlchemy to provide and configure a mapped relationship beten two models.
+- db.relationship is defined on the parent model, and it sets:
+  - the name of its children (e.g. children), for example parent1.children
+  - the name of a parent on a child using the backref, for example child1.my_amazing_parent
+
+![Parent class 'SomeParent' and Child class 'SomeChild'](https://video.udacity-data.com/topher/2019/August/5d5f5ed0_screen-shot-2019-08-22-at-8.34.29-pm/screen-shot-2019-08-22-at-8.34.29-pm.png)
+
+## 9. Configuring Relationships
+
+> When calling child1.some_parent, SQLAlchemy determines when  load the parent from the database.
+
+Why is it important to care about when  load parents?
+
+- Joins are expensive.
+- avoid having the user idling. Delays more than 150ms are noticeable, so milliseconds of performance matter!
+- make sure the joins happen during a time and place in the UX that doesn't negatively impact the experience too much.
+
+## 10. Foreign Key Constraint Setup
+`db.relationship` does not set up foreign key constraints for you. add a column, `some_parent_id`, on the **child** model,  set the foreign key constraint on the **child** model
+
+Whereas  set `db.relationship` on the **parent** model,  set the foreign key constraint on the **child** model.
+
+A foreign key constraint prefers **referential integrity** from one table to another, by ensuring that the foreign key column always maps a 
+primary key in the foreign table.
+
+`db.ForeignKey`
+- Option in db.column to specify a foreign key constraint, referring to the primary key of the other table / model
+- Gets defined on the Child model
+
+## 11. One-to-Many Relationship Setup
+1. Modified the todo model to allow null values in list_id:
+  `list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=True)`
+2. Ran the migration, allowing `list_id` to be null
+
+`see update file here SQL/todo/migrations/versions/916708d2db29_.py`
+
+Then in psql
+  1. populated database with a default list("uncategorized)
+  2. Associated existing to-do items with the "Uncategorized" list with ID 1, setting todo.list_id = 1. We could have also done this in a    migration rather than using psql; either works.
+  3. Set nullable=False on the list_id column
+  4. Ran flask db migrate to generate a migration file for updating the nullability constraint
+  5. Ran flask db upgrade to apply the migration
+
+# All is done except list_id doesn't show and 
+## 12. Practice - Modeling Relationships
