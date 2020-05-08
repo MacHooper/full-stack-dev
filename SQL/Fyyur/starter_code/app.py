@@ -23,7 +23,7 @@ app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/fyur'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+migrate = Migrate(app, db) # initial migration complete, psql databse populated.
 
 # TODO: connect to a local postgresql database - Connected using app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/fyur'
 
@@ -36,14 +36,17 @@ class Venue(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    genres = db.Column(db.String)
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     address = db.Column(db.String(120))
     phone = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
+    web_link = db.Column(db.String)
     facebook_link = db.Column(db.String(120))
+    seeking_talent = db.Column(db.Boolean)
 
-    # TODO: implement any missing fields, as a database migration using Flask-Migrate
+    # TODO: implement any missing fields, as a database migration using Flask-Migrate - Updated to include missing fields and migrated/upgraded.
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
