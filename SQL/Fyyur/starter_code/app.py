@@ -79,9 +79,8 @@ class Show(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime)
-    artist = db.Column(db.String, db.ForeignKey("artist.id"), nullable=False)
-    venue = db.Column(db.String, db.ForeignKey("venue.id"), nullable=False)
-
+    artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)
+    venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
 
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
 # Added a Show model that contains id, date, artist and venue Columns, the artist and venue columns contain foreign keys to their respective databases. 
