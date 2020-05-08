@@ -86,6 +86,10 @@ See the Flask-Migrate and Alembic docs [Flask-Migrate](https://flask-migrate.rea
 
 `from flask_migrate import Migrate`
 
+and add a databse with the following 
+
+`migrate = Migrate(app, db)`
+
 ## 4. Flask-Migrate - Part 2
 
 ### Creating the migrations directory structure using `flask db init`
