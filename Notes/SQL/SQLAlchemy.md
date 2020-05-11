@@ -182,7 +182,7 @@ if __name__ == '__main__':
 4.
 5.
 
-Database URI
+Database URI - postgresq://postgres:postgres@localhost:5432/databasename
 
 ![Database URI](https://video.udacity-data.com/topher/2019/August/5d4df44e_database-connection-uri-parts/database-connection-uri-parts.png)
 
