@@ -1,0 +1,69 @@
+# 1. Welcome!
+
+Topic: Application Programming Interfaces
+
+Essential for exposing the backend in a controlled way, so you can define behaviours to access and manipulate data while maintaining it's integrity.
+
+## 2. What are APIs
+
+An API is an Application Programming Interface. It is created to help two systems interact with one another.
+
+> Functionality is defined independent of the actual implementation of the provider.
+
+### API Benefits
+
+1. It doesn't expose the implementation to those who shouldn't have access to it.
+2. The API provides a standard way of accessing the application
+3. It makes it much easier to understand how to access the applications data.
+
+### Frequently used APIs
+
+- Google Maps
+- Stripe
+- Facebook
+- Instagram
+- Spotify
+  > all of the above have extensive documentation on usage.
+
+## 3. How APIs Work
+
+## Client-server Communication
+
+1. The user or client makes a request to the API server
+2. the API server parses the request and queries the database
+3. the API server formats the response from the database
+4. The API sends the formatted response to the user or client
+5. The user or client renders the response acc
+
+## 4. Internet Protocols
+
+Internet Protocol(IP) is the protocol for sending data from one computer to another across the internet. Each computer must have a unique IP Address that identifies it from all other computers connected to the internet, this is called an IP Address.
+
+Other Interent Protocols include:
+
+- Transmission Control Protocol (TCP) used for data transmission
+- Hypertext Transmission Protocol (HTTP) used for transmitting text and hyperlinks
+- File Transfer Protocol (FTP) used to transfer files between a client and a server
+
+An API will transmit data to the client via HTML.
+An API will handle HTTP and TCP.
+
+## 5. RESTful APIs
+
+**REST** stands for **Representational State Transfer** which is an architectural style introduce in 200 by Roy Fielding.
+
+Summary of REST Principles
+
+- **Uniform Interface:** Every rest architecture must havea standardized way of accessing and processing data resouces. This includes unique resource identifiers (i.e. unique URLs) and self descriptive message in the server response that describe how to process the representaion (e.g. JSON vs XML) of the data resource.
+- **Stateless:** Every client request is self-contained in that the server deosn't need to store any application data in order to make subsequent request.
+- **Client-Server:** There muse be botha client and server in the architecture
+- **Cacheable & layered System:** Caching and layering increases networking efficient.
+
+## 6. Start
+
+In this file I covered
+
+- What APIs are
+- Benefits of APIs
+- IP Communication
+- RESTful APIs

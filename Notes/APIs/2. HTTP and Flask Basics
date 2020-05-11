@@ -1,0 +1,205 @@
+# HTTP and Flask Basics
+
+## 1. Overview
+
+### Covered in this sections
+
+- HTTP Basics
+  - Methods
+  - Requests
+  - Responses
+  - Status Codes
+- Flask Microframework Intro
+  - Creating basic endpoints
+  - Testing resposne using Curl
+
+### Technologies Used
+
+- Flask
+- Curl
+
+## 2. Introduction to HTTP
+
+**Hypertext Transfer Protocol(HTTP)** is a protocol that provides a standardized way for computers to communicate with each other. It has been the foundation for data communication since 1990 and is integral to understanding how client-server communication functions.
+
+### Features:
+
+-- **Connectionless:** When a request is sent, the client opens the connection, once a response is received, the client closes the connection. The client and server only maintain a connection during the response and request. Future reponses are made on a new connection
+-- **Stateless:** There is no depndency between successive request.
+-- **Not Sessionless:** Utilizing headers and cookies, sessions can be created to allow each HTTP request to share the same contect.
+-- **Media Independent:** Any type of data can be sent over HTTP as long as both the client and server know how to handle the data format. In this case JSON will be used.
+
+### Elements:
+
+- \*\*Universal Resource Identifiers (URIs): An example URI is `https://www.example.com/tasks/term=homework`. It has certain components:
+  - **Scheme:** specifies the protocol used to access the resource, HTTP or HTTPS. in this example `https`.
+  - **Host:** specifies the host that holds the resources. In our example `www.example.com`
+  - **Path:** specifies the specific resource being request. In the example, `/tasks`.
+  - **Query:** an optional component, the query string provides information the resource can use for some purpose such as a search parameter. In this example, `/term=homework`.
+
+> **URI vs URL** URI can refer to any **identifier** for a resource-for example, it could be either the name of a resouce or the address of a resource. In contrast URL only refers to the location of a resource, or the address. URI could refer to a name or an address, URL only refers to an address.
+
+## 3. HTTP Requests
+
+HTTP requests are sent from the client to the server to initiate some operation. In addition to the URL, HTTPS requests have other elements to specify the requested resource.
+
+###Elements:
+
+- ** Method:** Defines the operation to be formed
+- ** Path:** The URL of the reource to be fetched, excluding the scheme and host
+- ** HTTP Version:**
+- ** Headers:**optional information, success as Accept-Language
+- ** Body:**optional information, usually for methods such as POST and PATCH, which contain the resource being sent to the server
+
+###Request Methods
+Different request methods indicate different operations to be performed. It's essential to attend to this to correctly format your requests and properly structure an API.
+
+- ** GET:** ONLY retrieves information for the requested resource of a given uri
+- ** POST:** Send data to the server to create a new resource.
+- ** PUT:** Replaces all of the representation of the target resource with the request data
+- ** PATCH:** Partially modifies the representation of teh target resouce with the request data
+- ** DELETE:** Removes all of the representation of the resource specified by the URI
+- ** OPTIONS:** Sends the communication options for the request resource
+
+## 4. HTTP Responses
+
+After the request has been received by the server and processed, the server returns an HTTP response message to the client. The response informs the client of the outcome of the requested operation.
+
+### Elements:
+
+- **Status Code & Status Message**
+- **HTTP Version**
+- **Headers:** similar to request headers, provides information about the response and resouce representation. Some common headers include:
+  - **Date**
+  - ** Content-Type:** The media type of the body of the request
+- ** Body:** Optional data containing the requested resource
+
+### Status Codes:
+
+It is important to send the correct status code. UIt's also import to understand status codes when developing using an API so you can understand what caused an error.
+
+#### Code Categories
+
+- `1xx` Informational
+- `2xx` Success
+- `3xx` Redirection
+- `4xx` Client Error
+- `5xx` Server Error
+
+#### Common Codes
+
+- `200` OK
+- `201` Created
+- `304` Not Modified
+- `400` Bad Request
+- `401` Unauthorized
+- `404` Not Found
+- `405` Method Not Allowed
+- `500` Internal Server Error
+
+## 5. Intro to Flask
+
+In this case Flask is the tool used to create the api server.
+
+It is a 'micro framework, which means that its core functionality is kept simple, but that there are numerous extension to add more functionality including authentication and database support.
+
+This section covers:
+
+- creating a basic Flask application
+- Writing a basic endpoint
+- checking the response using Curl.
+
+### Starting a Flask App.
+
+#### Directory & Virtualenv Set Up
+
+    1. Create proj. directory
+    2. Install flask using pip
+    3. Make the flaskr directory and `flaskr/__init__.py` file within it.
+    > application is now ready to be worked on.
+
+#### Create_app
+
+##### Basic app
+
+1. Import dependencies `from flask import Flask, jsonify`
+2. Define the `create_app` function with parameter `test_config` intially set to `None`. Then within the function:
+3. Define the application ensure you include the first parameter. `__name__` is the name of the current Python module.
+   - `app = Flask(__name__)`
+4. Return the app instance.
+   - `return app`
+
+#### Configured Application
+
+This basic application layout is useful for streamlining the development process even on larger scale applications.
+
+    1. Import additional dependencies. You'll need to import os in order to access the operating system and file structure `import os`
+    2. Set up your default config. When working in development your `SECRET_KEY` can be hardcoded as show but for production should come from a secret enviroment variable.
+      ```
+      app.config.from_mapping(
+      SECRET_KEY='dev',
+      DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite')
+      )
+      ```
+    3. if a `config.py` file is inclujded in the isntance folder, use its values to override the default configuration, for instance the `SECRET_KEY`. You can also enable a testing configuration if it was passed into the `create_app` function.
+      ```
+      if test_config is None:
+        # load the instance config, if it exists, when not testing
+        app.config.from_pyfile('config.py', silent=True)
+        else:
+        # load the test config if passed in
+        app.config.from_mapping(test_config)
+       ```
+    4. Make the instance path directory. The app will cerate the database file with in that directory so it need to exist.
+      ```
+      try:
+        os.markedirs(app.instance_path)
+       except OSError:
+        pass
+       ```
+
+#### First Endpoint with JSON
+
+Before you return the app, use the @app.route decorator to create an endpoint wto path `/` and define a function to handle that route.
+`@app.route('/') def hello_world(): return 'Hello, World!' retrun app`
+Instead of returning text, use jsonify to send an object containing the message.
+`return jsonify({message':'Hello, World!'})
+
+#### Run your application
+
+In your command line, run three lines of code The first two lines tell the terminal where to find your application and to run it in development mode which allows you to keep it running while it hotloads any modifications. The third actually starts the application.
+
+```
+export FLASK_APP=flaskr
+export LASK_ENV=development
+flask run
+```
+
+## 6. Introduction to Curl and Dev Tools\*\*
+
+If you want to see how your requests are being sent and what the responses are from the browser you can do so using _Dev Tools_ most modern browser have developer tools. The **Network** tab is what to look at here.
+
+#### Curl
+
+**Curl** is a library and command line tool that omplete s IP transfers of data using URLS=s. One quick way to test your API while your server is running is to run a curl command in another terminal window.
+
+#### Curl syntax
+
+.`curl -X POST http://www.example.com/tasks/` is an example of a curl request. Every request starts with the command `curl` and need to include a URL. Other parts you see added in are options that you can use to build your request. In the example `-X` shortform option ( also `--request``) specifies the request method.
+
+#### Curl options
+
+You can indmore options by entering `ur===curl --help` in the terminal.
+
+## 7. Review
+
+### Covered in this section
+
+- HTTP Basics
+  - Methods
+    -Requests
+    -Responses
+    -Status Codes
+    -Flask Microframework Intro
+    -Creating your first basic endpoint
+  - Testing the response using Curl
